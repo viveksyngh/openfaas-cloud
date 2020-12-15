@@ -403,6 +403,8 @@ func getEventFromEnv() (*sdk.Event, error) {
 	info := sdk.Event{}
 
 	info.Labels = make(map[string]string)
+	info.Environment = make(map[string]string)
+	info.Annotations = make(map[string]string)
 
 	info.Service = os.Getenv("Http_Service")
 	info.Owner = os.Getenv("Http_Owner")
@@ -433,7 +435,6 @@ func getEventFromEnv() (*sdk.Event, error) {
 			info.Environment = envVars
 		} else {
 			log.Printf("Error un-marshaling env-vars map for function %s, %s", info.Service, unmarshalErr)
-			info.Environment = make(map[string]string)
 		}
 	}
 
@@ -446,7 +447,6 @@ func getEventFromEnv() (*sdk.Event, error) {
 			info.Labels = labels
 		} else {
 			log.Printf("Error un-marshaling labels map for function %s, %s", info.Service, marshalErr)
-			info.Labels = make(map[string]string)
 		}
 	}
 
@@ -459,7 +459,6 @@ func getEventFromEnv() (*sdk.Event, error) {
 			info.Annotations = annotations
 		} else {
 			log.Printf("Error un-marshaling annotations map for function %s, %s", info.Service, marshalErr)
-			info.Annotations = make(map[string]string)
 		}
 	}
 
